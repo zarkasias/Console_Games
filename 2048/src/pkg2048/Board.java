@@ -192,7 +192,7 @@ public class Board {
                             if(k != j){
                                 moved = true;
                                 steps++;
-                                board[i][--k] = board[i][j];
+                                board[i][k] = board[i][j];
                                 board[i][j] = 0;
                             }
                         }
