@@ -14,8 +14,8 @@ import java.util.Random;
  */
 public class Board {
     public int[][] board = new int[4][4];
-    final int target = 2048;
-    boolean finish = false;
+    final int target = 64;
+    int tiles = 0;
     int steps = 0;
     boolean moved = false;
     
@@ -35,6 +35,7 @@ public class Board {
         }            
         if(num > 80) board[i][j] = 4;
         else board[i][j] = 2;
+        this.tiles++;
     }
     
     
@@ -58,10 +59,11 @@ public class Board {
                 break;
             default: break;
         }
-        if(finish) return;
+        System.out.println(this.tiles);
         if(moved){
             moved = false;
             numGenerator();
+            if(this.tiles == 16) this.isLost();
         }
     }
     
@@ -80,8 +82,9 @@ public class Board {
                         if(place == board[i][j]){
                             moved = true;
                             steps++;
+                            tiles--;
                             board[k][j] *= 2;
-                            if(isFinish(board[k][j])) return;
+                            isFinish(board[k][j]);
                             k++;
                             board[i][j] = 0;
                         }else{
@@ -115,8 +118,9 @@ public class Board {
                         if(place == board[i][j]){
                             moved = true;
                             steps++;
+                            tiles--;
                             board[k][j] *= 2;
-                            if(isFinish(board[k][j])) return;
+                            isFinish(board[k][j]);
                             k--;
                             board[i][j] = 0;
                         }else{
@@ -149,8 +153,9 @@ public class Board {
                         if(place == board[i][j]){
                             moved = true;
                             steps++;
+                            tiles--;
                             board[i][k] *= 2;
-                            if(isFinish(board[i][k])) return;
+                            isFinish(board[i][k]);
                             k++;
                             board[i][j] = 0;
                         }else{
@@ -183,8 +188,9 @@ public class Board {
                         if(place == board[i][j]){
                             moved = true;
                             steps++;
+                            tiles--;
                             board[i][k] *= 2;
-                            if(isFinish(board[i][k])) return;
+                            isFinish(board[i][k]);
                             k--;
                             board[i][j] = 0;
                         }else{
@@ -203,8 +209,39 @@ public class Board {
         }
     }
     
-    boolean isFinish(int i){
-        if(i==target) finish = true;
-        return i==target;
+    private void isFinish(int i){
+        if(i==target){
+            System.out.println("Congrates! Steps: " + this.steps);
+            System.exit(0);
+        }
+    }
+    
+    private void isLost(){
+        int prev = 0;
+        boolean lost = true;
+        for(int i=0;i<4;i++){
+            for(int j=0;j<4;j++){
+                if(i==0 && j==0) prev = board[i][j];
+                else{
+                    if(board[i][j] == prev) lost = false;
+                    break;
+                }
+            }
+        }
+        if(lost){
+            for(int j=0;j<4;j++){
+                for(int i=0;i<4;i++){
+                    if(i==0 && j==0) prev = board[i][j];
+                    else{
+                        if(board[i][j] == prev) lost = false;
+                        break;
+                    }
+                }
+            }
+            if(lost){
+                System.out.println("Game Over!");
+                System.exit(0); 
+            }
+        }
     }
 }

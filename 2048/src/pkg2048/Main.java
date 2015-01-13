@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+// add a game over 
 package pkg2048;
 
 import java.util.Scanner;
@@ -29,14 +29,9 @@ public class Main {
             if(input.equals("h")) help();
             b.move(input);
             b.printBoard();
-            if(b.finish){
-                System.out.println("Congrates! steps: " + b.steps);
-                break;
-            }
             input = reader.next();
         }
     }
-    
     public static void help(){
         System.out.println("w = Up, a = Left, s = Down, d = Right");
     }
