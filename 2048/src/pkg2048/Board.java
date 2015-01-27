@@ -14,7 +14,7 @@ import java.util.Random;
  */
 public class Board {
     public int[][] board = new int[4][4];
-    final int target = 64;
+    final int target = 2048;
     int tiles = 0;
     int steps = 0;
     boolean moved = false;
@@ -59,8 +59,8 @@ public class Board {
                 break;
             default: break;
         }
-        System.out.println(this.tiles);
         if(moved){
+            this.steps++;
             moved = false;
             numGenerator();
             if(this.tiles == 16) this.isLost();
@@ -75,13 +75,11 @@ public class Board {
                     int place = board[k][j];
                     if(place == 0){
                         moved = true;
-                        steps++;
                         board[k][j] = board[i][j];
                         board[i][j] = 0;
                     }else{
                         if(place == board[i][j]){
                             moved = true;
-                            steps++;
                             tiles--;
                             board[k][j] *= 2;
                             isFinish(board[k][j]);
@@ -91,7 +89,6 @@ public class Board {
                             k++;
                             if(k != i){
                                 moved = true;
-                                steps++;
                                 board[k][j] = board[i][j];
                                 board[i][j] = 0;
                             }
@@ -111,13 +108,11 @@ public class Board {
                     int place = board[k][j];
                     if(place == 0){
                         moved = true;
-                        steps++;
                         board[k][j] = board[i][j];
                         board[i][j] = 0;
                     }else{
                         if(place == board[i][j]){
                             moved = true;
-                            steps++;
                             tiles--;
                             board[k][j] *= 2;
                             isFinish(board[k][j]);
@@ -127,7 +122,6 @@ public class Board {
                             k--;
                             if(k != i){
                                 moved = true;
-                                steps++;
                                 board[k][j] = board[i][j];
                                 board[i][j] = 0;
                             }
@@ -146,13 +140,11 @@ public class Board {
                     int place = board[i][k];
                     if(place == 0){
                         moved = true;
-                        steps++;
                         board[i][k] = board[i][j];
                         board[i][j] = 0;
                     }else{
                         if(place == board[i][j]){
                             moved = true;
-                            steps++;
                             tiles--;
                             board[i][k] *= 2;
                             isFinish(board[i][k]);
@@ -162,7 +154,6 @@ public class Board {
                             k++;
                             if( k != j){
                                 moved = true;
-                                steps++;
                                 board[i][k] = board[i][j];
                                 board[i][j] = 0;
                             }
@@ -181,13 +172,11 @@ public class Board {
                     int place = board[i][k];
                     if(place == 0){
                         moved = true;
-                        steps++;
                         board[i][k] = board[i][j];
                         board[i][j] = 0;
                     }else{
                         if(place == board[i][j]){
                             moved = true;
-                            steps++;
                             tiles--;
                             board[i][k] *= 2;
                             isFinish(board[i][k]);
@@ -197,7 +186,6 @@ public class Board {
                             k--;
                             if(k != j){
                                 moved = true;
-                                steps++;
                                 board[i][k] = board[i][j];
                                 board[i][j] = 0;
                             }
@@ -211,7 +199,7 @@ public class Board {
     
     private void isFinish(int i){
         if(i==target){
-            System.out.println("Congrates! Steps: " + this.steps);
+            System.out.println("Congrates! Steps: " + (this.steps+1));
             System.exit(0);
         }
     }
