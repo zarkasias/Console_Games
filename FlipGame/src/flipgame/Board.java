@@ -14,8 +14,8 @@ import java.util.Random;
  */
 public class Board {
     Card[] cards;
-    Card[] matches;
-    int cur = 0;
+    Card[] matches; //cards have the same val
+    int cur = 0; //index pointer in matches
     int count = 0;
     
     
@@ -31,9 +31,7 @@ public class Board {
         }
         this.cards = new Card[num];
         for(int i=0;i<num;i++){
-            if(i%match < match){
-                this.cards[i] = new Card(i/match);
-            }
+            this.cards[i] = new Card(i/match);
         }
         shuffle();
     }
